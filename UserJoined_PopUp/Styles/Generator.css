@@ -1,0 +1,10 @@
+.BuilderSide .MainController::-webkit-scrollbar {
+  width: 4px;
+}
+.BuilderSide .MainController::-webkit-scrollbar-track {
+  background: transparent;
+}
+.BuilderSide .MainController::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 2px;
+}/*# sourceMappingURL=Generator.css.map */

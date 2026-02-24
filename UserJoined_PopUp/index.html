@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PopUp Creator | Vanced Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              border: "hsl(var(--border))",
+              input: "hsl(var(--input))",
+              ring: "hsl(var(--ring))",
+              background: "hsl(var(--background))",
+              foreground: "hsl(var(--foreground))",
+              primary: {
+                DEFAULT: "hsl(var(--primary))",
+                foreground: "hsl(var(--primary-foreground))",
+              },
+              secondary: {
+                DEFAULT: "hsl(var(--secondary))",
+                foreground: "hsl(var(--secondary-foreground))",
+              },
+              muted: {
+                DEFAULT: "hsl(var(--muted))",
+                foreground: "hsl(var(--muted-foreground))",
+              },
+              accent: {
+                DEFAULT: "hsl(var(--accent))",
+                foreground: "hsl(var(--accent-foreground))",
+              },
+            },
+            borderRadius: {
+              lg: "var(--radius)",
+              md: "calc(var(--radius) - 2px)",
+              sm: "calc(var(--radius) - 4px)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="./Styles/Generator.css" />
+    <link rel="stylesheet" href="./Styles/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans antialiased h-screen flex overflow-hidden">
+    <!-- SIDEBAR -->
+    <aside
+      class="BuilderSide w-[350px] border-r bg-card flex flex-col z-10 shadow-sm"
+    >
+      <div class="p-6 border-b flex justify-between items-center">
+        <h2 class="text-lg font-semibold tracking-tight">PopUp Builder</h2>
+        <button
+          id="get-code-btn"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          Get Code
+        </button>
+      </div>
+
+      <div class="MainController flex-1 overflow-y-auto p-6 space-y-8">
+        <!-- Visual Settings -->
+        <div class="space-y-4">
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider"
+          >
+            Visual
+          </h3>
+
+          <div class="space-y-2">
+            <label
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >Background Color</label
+            >
+            <div class="flex gap-2">
+              <input
+                type="color"
+                id="bg-color"
+                value="#ffffff"
+                class="h-9 w-12 p-1 rounded-md border border-input cursor-pointer"
+              />
+              <div class="flex-1 flex items-center gap-2">
+                <span class="text-xs text-muted-foreground w-12">Opacity</span>
+                <input
+                  type="range"
+                  id="bg-opacity"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.9"
+                  class="flex-1"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-sm font-medium leading-none">Text Color</label>
+              <input
+                type="color"
+                id="text-color"
+                value="#333333"
+                class="h-9 w-full p-1 rounded-md border border-input cursor-pointer"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium leading-none">Highlight</label>
+              <input
+                type="color"
+                id="highlight-color"
+                value="#007bff"
+                class="h-9 w-full p-1 rounded-md border border-input cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <!-- PADDING (Advanced) -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-medium leading-none"
+                >Padding (px)</label
+              >
+            </div>
+
+            <!-- Cross Layout for Padding -->
+            <div class="flex flex-col items-center gap-2">
+              <!-- Top Row -->
+              <div class="w-24">
+                <div class="relative">
+                  <span
+                    class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground"
+                    >T</span
+                  >
+                  <input
+                    type="number"
+                    id="pad-top"
+                    value="12"
+                    class="w-full pl-6 pr-2 py-1 text-xs border rounded-md text-center"
+                  />
+                </div>
+              </div>
+
+              <!-- Middle Row (Left - Link - Right) -->
+              <div class="flex items-center gap-2">
+                <div class="w-24">
+                  <div class="relative">
+                    <span
+                      class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground"
+                      >L</span
+                    >
+                    <input
+                      type="number"
+                      id="pad-left"
+                      value="16"
+                      class="w-full pl-6 pr-2 py-1 text-xs border rounded-md text-center"
+                    />
+                  </div>
+                </div>
+
+                <!-- Constrain Toggle -->
+                <button
+                  id="padding-constrain"
+                  class="h-8 w-8 flex items-center justify-center rounded-md border text-muted-foreground hover:bg-muted hover:text-primary active transition-colors"
+                  title="Constrain Values"
+                >
+                  <span class="text-xs">🔗</span>
+                </button>
+
+                <div class="w-24">
+                  <div class="relative">
+                    <span
+                      class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground"
+                      >R</span
+                    >
+                    <input
+                      type="number"
+                      id="pad-right"
+                      value="16"
+                      class="w-full pl-6 pr-2 py-1 text-xs border rounded-md text-center"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Row -->
+              <div class="w-24">
+                <div class="relative">
+                  <span
+                    class="absolute left-2 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground"
+                    >B</span
+                  >
+                  <input
+                    type="number"
+                    id="pad-bottom"
+                    value="12"
+                    class="w-full pl-6 pr-2 py-1 text-xs border rounded-md text-center"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SHADOW CONTROL -->
+          <div class="space-y-3 pt-2 border-t">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-medium leading-none"
+                >Drop Shadow</label
+              >
+              <div class="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="shadow-enable"
+                  checked
+                  class="h-3 w-3 rounded border-gray-300"
+                />
+              </div>
+            </div>
+
+            <div id="shadow-controls" class="space-y-3">
+              <div class="grid grid-cols-2 gap-2">
+                <div class="space-y-1">
+                  <label class="text-[10px] text-muted-foreground"
+                    >X Offset</label
+                  >
+                  <input
+                    type="number"
+                    id="shadow-x"
+                    value="0"
+                    class="w-full px-2 py-1 text-xs border rounded-md"
+                  />
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[10px] text-muted-foreground"
+                    >Y Offset</label
+                  >
+                  <input
+                    type="number"
+                    id="shadow-y"
+                    value="8"
+                    class="w-full px-2 py-1 text-xs border rounded-md"
+                  />
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between">
+                  <label class="text-[10px] text-muted-foreground"
+                    >Blur Radius</label
+                  >
+                  <span
+                    id="val-shadow-blur"
+                    class="text-[10px] text-muted-foreground"
+                    >32px</span
+                  >
+                </div>
+                <input
+                  type="range"
+                  id="shadow-blur"
+                  min="0"
+                  max="100"
+                  value="32"
+                  class="w-full h-1"
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground">Color</label>
+                <div class="flex gap-2">
+                  <input
+                    type="color"
+                    id="shadow-color"
+                    value="#1f2687"
+                    class="h-8 w-12 p-0 border-0 rounded cursor-pointer"
+                  />
+                  <div class="flex-1 flex items-center gap-2">
+                    <span class="text-[10px] text-muted-foreground"
+                      >Alpha:</span
+                    >
+                    <input
+                      type="range"
+                      id="shadow-opacity"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value="0.15"
+                      class="flex-1 h-1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <label class="text-sm font-medium leading-none">Radius</label>
+              <span id="val-radius" class="text-xs text-muted-foreground"
+                >12px</span
+              >
+            </div>
+            <input
+              type="range"
+              id="border-radius"
+              min="0"
+              max="128"
+              value="12"
+              class="w-full"
+            />
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="space-y-0.5">
+                <label class="text-sm font-medium leading-none">Border</label>
+              </div>
+              <input
+                type="checkbox"
+                id="border-enable"
+                checked
+                class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary shadow-sm"
+              />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="space-y-1">
+                <label class="text-xs font-medium text-muted-foreground"
+                  >Width</label
+                >
+                <input
+                  type="number"
+                  id="border-width"
+                  value="1"
+                  min="0"
+                  max="10"
+                  class="flex h-8 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-medium text-muted-foreground"
+                  >Color</label
+                >
+                <div class="relative">
+                  <input
+                    type="color"
+                    id="border-color"
+                    value="#ffffff"
+                    class="h-8 w-full cursor-pointer rounded-md border border-input bg-background p-1"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px bg-border"></div>
+
+        <!-- Behavior Settings -->
+        <div class="space-y-4">
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider"
+          >
+            Behavior
+          </h3>
+
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none"
+              >Animation Type</label
+            >
+            <select
+              id="anim-type"
+              class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="anim-slide-up">Slide Up</option>
+              <option value="anim-fade">Fade In</option>
+              <option value="anim-zoom">Zoom In</option>
+              <option value="anim-slide-side">Slide Side</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <label class="text-sm font-medium leading-none">Speed</label>
+              <span id="val-speed" class="text-xs text-muted-foreground"
+                >0.5s</span
+              >
+            </div>
+            <input
+              type="range"
+              id="anim-speed"
+              min="0.2"
+              max="2"
+              step="0.1"
+              value="0.5"
+              class="w-full"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-sm font-medium leading-none"
+                >Display (ms)</label
+              >
+              <input
+                type="number"
+                id="display-time"
+                value="5000"
+                step="500"
+                class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium leading-none">Delay (ms)</label>
+              <input
+                type="number"
+                id="delay-time"
+                value="3000"
+                step="500"
+                class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none"
+              >Animation Preview</label
+            >
+            <button
+              id="toggle-play"
+              class="flex w-full items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground"
+            >
+              <span id="play-icon">▶ Play Animation</span>
+            </button>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none"
+              >Viewer Count Range</label
+            >
+            <div class="flex items-center gap-2">
+              <input
+                type="number"
+                id="viewer-min"
+                value="15"
+                class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              />
+              <span class="text-muted-foreground">-</span>
+              <input
+                type="number"
+                id="viewer-max"
+                value="50"
+                class="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px bg-border"></div>
+
+        <!-- Content Settings -->
+        <div class="space-y-4">
+          <h3
+            class="text-sm font-medium text-muted-foreground uppercase tracking-wider"
+          >
+            Content
+          </h3>
+          <div class="space-y-2">
+            <label class="text-sm font-medium leading-none">Position</label>
+            <select
+              id="position-select"
+              class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-right">Bottom Right</option>
+              <option value="top-left">Top Left</option>
+              <option value="top-right">Top Right</option>
+            </select>
+          </div>
+
+          <div class="space-y-4 pt-2">
+            <div class="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="use-avatar"
+                class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary shadow-sm"
+              />
+              <label
+                for="use-avatar"
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >Use Avatar (Purchase Only)</label
+              >
+            </div>
+
+            <div id="avatar-config-area" class="space-y-4 hidden">
+              <div class="space-y-2">
+                <label class="text-sm font-medium leading-none"
+                  >Avatar URLs (Male)</label
+                >
+                <textarea
+                  id="avatar-male"
+                  rows="3"
+                  placeholder="https://example.com/male1.jpg..."
+                  class="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                ></textarea>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium leading-none"
+                  >Avatar URLs (Female)</label
+                >
+                <textarea
+                  id="avatar-female"
+                  rows="3"
+                  placeholder="https://example.com/female1.jpg..."
+                  class="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Male/General Names -->
+          <div class="space-y-2">
+            <label
+              class="text-sm font-medium leading-none"
+              id="label-custom-names"
+              >Custom Names (One per line)</label
+            >
+            <textarea
+              id="custom-names"
+              rows="5"
+              placeholder="Nguyễn Văn A&#10;Trần Văn B..."
+              class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            ></textarea>
+          </div>
+
+          <!-- Female Names (Hidden by default) -->
+          <div class="space-y-2 hidden" id="names-female-area">
+            <label class="text-sm font-medium leading-none"
+              >Custom Names (Female) ♀</label
+            >
+            <textarea
+              id="custom-names-female"
+              rows="5"
+              placeholder="Nguyễn Thị C&#10;Trần Thị D..."
+              class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PREVIEW AREA -->
+    <main
+      class="flex-1 bg-secondary/50 relative overflow-hidden flex items-center justify-center builder-preview"
+      id="preview-canvas"
+    >
+      <div
+        class="absolute top-6 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-medium text-muted-foreground shadow-sm border border-white/20 z-50"
+      >
+        Live Preview Area
+      </div>
+
+      <!-- STATIC PREVIEW (Visible when Paused) -->
+      <div
+        id="static-preview-area"
+        class="flex flex-col gap-4 items-center justify-center w-full h-full p-10 transition-opacity duration-300"
+      >
+        <!-- Static Viewer PopUp -->
+        <div class="vanced-popup-container static-popup">
+          <div class="vanced-popup-content">
+            <div class="vanced-popup-image" style="display: none">
+              <img src="https://via.placeholder.com/50" alt="Avatar" />
+            </div>
+            <div class="vanced-popup-text">
+              <p>
+                Hiện đang có <span class="vanced-highlight">24</span> người đang
+                xem sản phẩm này
+              </p>
+              <span class="vanced-time-ago">Trực tiếp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static Purchase PopUp -->
+        <div class="vanced-popup-container static-popup">
+          <div class="vanced-popup-content">
+            <div
+              class="vanced-popup-image"
+              id="static-purchase-img-container"
+              style="display: none"
+            >
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Avatar"
+                id="static-purchase-img"
+              />
+            </div>
+            <div class="vanced-popup-text">
+              <p>
+                <span class="vanced-highlight">Nguyễn Văn A</span> vừa đặt hàng
+                thành công
+              </p>
+              <span class="vanced-time-ago">Vừa xong</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-sm text-muted-foreground mt-4">Preview Mode (Paused)</p>
+      </div>
+
+      <!-- ANIMATED POPUP CONTAINER (Injected here) -->
+      <div
+        id="vanced-popup-container"
+        class="vanced-popup-container anim-slide-up"
+        style="opacity: 0; pointer-events: none"
+      >
+        <div class="vanced-popup-content">
+          <div class="vanced-popup-image" style="display: none">
+            <img
+              src="https://via.placeholder.com/50"
+              alt="Product"
+              id="vanced-popup-img"
+            />
+          </div>
+          <div class="vanced-popup-text">
+            <p id="vanced-popup-message">Waiting for data...</p>
+            <span id="vanced-popup-time" class="vanced-time-ago">vừa xong</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Internal Styles for Preview Logic override -->
+      <style>
+        /* Override for Builder Preview ONLY */
+        #preview-canvas {
+          position: relative;
+          /* CSS vars will be set on this element by JS */
+        }
+
+        /* Animated Popup Positioning Override */
+        #preview-canvas .vanced-popup-container:not(.static-popup) {
+          position: absolute !important; /* Force absolute within relative container */
+        }
+
+        /* Static Popup Styles */
+        .static-popup {
+          position: relative !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          top: auto !important;
+          opacity: 1 !important;
+          transform: none !important;
+          pointer-events: auto !important;
+          /* Inherit other visual vars from #preview-canvas */
+        }
+      </style>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module" src="./animation.js"></script>
+    <script type="module" src="./ScriptGenerator.js"></script>
+    <script type="module" src="./builder_logic.js"></script>
+  </body>
+</html>

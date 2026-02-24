@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanced Landing Page - Mock</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+
+    <!-- VANCEDS POPUP INTEGRATION (LOCAL CDN) -->
+    <link rel="stylesheet" href="./cdn_dist/v1.0/Styles/style.css" />
+    <style>
+      :root {
+        --vp-bg-color: rgba(255, 255, 255, 0.9);
+        --vp-text-color: #333333;
+        --vp-highlight-color: #007bff;
+        --vp-border-radius: 12px;
+        --vp-border-width: 1px;
+        --vp-border-color: rgba(255, 255, 255, 0.5);
+        --vp-padding: 12px 16px;
+        --vp-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --vp-transition-speed: 0.5s;
+      }
+      /* Position Override for this page */
+      #vanced-popup-container {
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999; /* Ensure it's on top */
+        position: fixed; /* Fixed on Real Page */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <div class="font-bold text-2xl text-blue-600">Vanced</div>
+        <nav class="hidden md:flex gap-6">
+          <a href="#" class="hover:text-blue-600">Features</a>
+          <a href="#" class="hover:text-blue-600">Pricing</a>
+          <a href="#" class="hover:text-blue-600">About</a>
+        </nav>
+        <button
+          class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition"
+        >
+          Get Started
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <div class="container mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 text-gray-900">
+          Boost Your Conversion Rates <br />
+          <span class="text-blue-600">With Social Proof</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Show real-time purchase activity and viewer counts to create urgency
+          and trust. Simple integration, powerful results.
+        </p>
+        <div class="flex gap-4 justify-center">
+          <button
+            class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 shadow-lg"
+          >
+            Start Free Trial
+          </button>
+          <button
+            class="bg-white text-gray-700 border px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50"
+          >
+            Learn More
+          </button>
+        </div>
+
+        <div class="mt-12">
+          <img
+            src="https://via.placeholder.com/800x400/e0e7ff/4f46e5?text=Dashboard+Preview"
+            alt="Dashboard"
+            class="mx-auto rounded-xl shadow-2xl border"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20">
+      <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-12">
+          Why Choose Vanced PopUp?
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow border hover:shadow-lg transition"
+          >
+            <div
+              class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 text-blue-600 text-2xl"
+            >
+              🚀
+            </div>
+            <h3 class="text-xl font-bold mb-2">Easy Integration</h3>
+            <p class="text-gray-600">
+              Just copy and paste a few lines of code. No coding knowledge
+              required.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow border hover:shadow-lg transition"
+          >
+            <div
+              class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 text-purple-600 text-2xl"
+            >
+              🎨
+            </div>
+            <h3 class="text-xl font-bold mb-2">Fully Customizable</h3>
+            <p class="text-gray-600">
+              Match your brand with custom colors, fonts, avatars, and
+              animations.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div
+            class="bg-white p-6 rounded-xl shadow border hover:shadow-lg transition"
+          >
+            <div
+              class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 text-green-600 text-2xl"
+            >
+              📈
+            </div>
+            <h3 class="text-xl font-bold mb-2">Increase Sales</h3>
+            <p class="text-gray-600">
+              Leverage FOMO and social proof to drive more conversions
+              instantly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+      <div class="container mx-auto px-6 text-center">
+        <p>&copy; 2024 Vanced Media. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- VANCED POPUP STRUCTURE -->
+    <div
+      id="vanced-popup-container"
+      class="vanced-popup-container anim-slide-up"
+    >
+      <div class="vanced-popup-content">
+        <div class="vanced-popup-image" style="display: none">
+          <img
+            src="https://via.placeholder.com/50"
+            alt="Avatar"
+            id="vanced-popup-img"
+          />
+        </div>
+        <div class="vanced-popup-text">
+          <p id="vanced-popup-message">Waiting...</p>
+          <span id="vanced-popup-time" class="vanced-time-ago">vừa xong</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VANCED POPUP SCRIPT -->
+    <script type="module">
+      // Mock Config
+      window.UserJoinedPopUpConfig = {
+        names: [
+          { name: "Nguyễn Văn Test", gender: "male" },
+          { name: "Trần Thị Demo", gender: "female" },
+          { name: "Le Van User", gender: "male" },
+        ],
+        avatarsMale: [
+          "https://i.pravatar.cc/150?img=11",
+          "https://i.pravatar.cc/150?img=12",
+        ],
+        avatarsFemale: [
+          "https://i.pravatar.cc/150?img=5",
+          "https://i.pravatar.cc/150?img=9",
+        ],
+        useAvatar: true,
+        displayDuration: 4000,
+        delayBetween: 2000,
+        viewerRange: { min: 50, max: 100 },
+        autoPlay: true, // Important for auto start
+      };
+
+      // Import from LOCAL CDN DIST
+      import "./cdn_dist/v1.0/ScriptGenerator.js";
+    </script>
+  </body>
+</html>
